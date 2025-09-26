@@ -2,20 +2,23 @@ import React, { useState } from 'react';
 import './App.css';
 import { Drawing } from './drawings/Drawing';
 
-type SketchType = 'basic' | '2';
+type SketchType = 'basic' | '2' | '3' | '4' | '5';
 
 function App() {
   const [selectedSketch, setSelectedSketch] = useState<SketchType>('basic');
 
   const sketchOptions = [
     { value: 'basic' as SketchType, label: 'Rectangles Colorés' },
-    { value: '2' as SketchType, label: 'Lignes Interactives' }
+    { value: '2' as SketchType, label: 'Lignes Interactives' },
+    { value: '3' as SketchType, label: 'Coloriage multicolor' },
+    { value: '4' as SketchType, label: 'Miroir miroir' },
+    { value: '5' as SketchType, label: 'Spider legs' }
   ];
 
   return (
     <div className="App">
       <header className="App-header">
-        <h1>Galerie de Dessins P5.js</h1>
+        <h1>Mes petits jouets</h1>
         
         <div style={{ marginBottom: '20px' }}>
           <h3>Choisissez un dessin :</h3>
