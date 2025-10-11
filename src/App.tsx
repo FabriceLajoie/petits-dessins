@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
-import './App.css';
 import { Drawing } from './drawings/Drawing';
 
-type SketchType = 'basic' | '2' | '3' | '4' | '5';
+type SketchType = 'basic' | '2' | '3' | '4' | '5' | '6';
 
 function App() {
   const [selectedSketch, setSelectedSketch] = useState<SketchType>('basic');
@@ -12,7 +11,8 @@ function App() {
     { value: '2' as SketchType, label: 'Lignes Interactives' },
     { value: '3' as SketchType, label: 'Coloriage multicolor' },
     { value: '4' as SketchType, label: 'Miroir miroir' },
-    { value: '5' as SketchType, label: 'Spider legs' }
+    { value: '5' as SketchType, label: 'Spider legs' },
+    { value: '6' as SketchType, label: 'Unlabeled' }
   ];
 
   return (

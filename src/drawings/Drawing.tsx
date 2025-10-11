@@ -2,7 +2,7 @@ import React from 'react';
 import { P5CanvasInstance, ReactP5Wrapper } from '@p5-wrapper/react';
 
 interface DrawingProps {
-  sketchType?: 'basic' | '2' | '3' | '4' | '5';
+  sketchType?: 'basic' | '2' | '3' | '4' | '5' | '6';
 }
 
 function randomInt(max: number ) {
@@ -10,10 +10,6 @@ function randomInt(max: number ) {
 }
 function randomIntMin(min: number, max: number) {
   return Math.floor( Math.random() * (max - min) + min);
-}
-
-async function sleep(ms: number): Promise<void> {
-  return new Promise( resolve => setTimeout(resolve, ms));
 }
 
 let width = 650;
@@ -57,7 +53,7 @@ export function Drawing({ sketchType = 'basic' }: DrawingProps) {
       p5.stroke(r,g,b);
       p5.strokeWeight(w);
 
-      if( p5.mouseIsPressed && (p5.mouseButton == p5.LEFT ) ) {
+      if( p5.mouseIsPressed && (p5.mouseButton === p5.LEFT ) ) {
         p5.line(width/2, height/2, p5.mouseX, p5.mouseY);
       }
     };
@@ -134,6 +130,45 @@ export function Drawing({ sketchType = 'basic' }: DrawingProps) {
   };
 
   const sketch5 = (p5: P5CanvasInstance) => {
+
+    // const Pos: {
+    //   x:number;
+    //   y:number;
+    // };
+
+
+    let lastDrawTime = 0;
+    p5.setup = () => {
+      p5.createCanvas(width, height);
+      p5.background(randomInt(255), randomInt(255), randomInt(255));
+      lastDrawTime = p5.millis();
+    }
+
+    p5.draw = () => {
+      let r = randomInt(255);
+      let g = randomInt(255);
+      let b = randomInt(255);
+      
+      let ul : {x:Number, y:Number} = {x:width/4,y:height/4};
+      let ur : {x:Number, y:Number} = {x:width/4, y:(height/4) * 3};
+      let dl : {x:Number, y:Number} = {x:(width/4) * 3, y:height/4};
+      let dr : {x:Number, y:Number} = {x:(width/4) * 3, y:(height/4) * 3};
+
+      if( p5.millis() - lastDrawTime >= 300) {
+        // Pos s = new Pos();
+
+        p5.fill(r,g,b);
+        p5.rect(ul.x, ul.y, 50);
+        p5.rect(ur.x, ur.y, 50);
+        p5.rect(dl.x, dl.y, 50);
+        p5.rect(dr.x, dr.y, 50);
+        lastDrawTime = p5.millis();
+      }
+
+    };
+  };
+
+    const sketch6 = (p5: P5CanvasInstance) => {
     let w:number, h:number;
     p5.setup = () => {
       p5.createCanvas(width, height);
@@ -142,7 +177,7 @@ export function Drawing({ sketchType = 'basic' }: DrawingProps) {
 
     p5.draw = () => {
       p5.fill(255, 255, 255, randomIntMin(20, 255));
-      if( p5.mouseIsPressed && (p5.mouseButton == p5.LEFT)) {
+      if( p5.mouseIsPressed && (p5.mouseButton === p5.LEFT)) {
         if( p5.mouseY<250) {h = p5.mouseY/10}
         if( p5.mouseY>250) {h = (500 - p5.mouseY)/10}
         if( p5.mouseX< 325){w = p5.mouseX/15}
@@ -159,6 +194,7 @@ export function Drawing({ sketchType = 'basic' }: DrawingProps) {
       case '3': return sketch3;
       case '4': return sketch4;
       case '5': return sketch5;
+      case '6': return sketch6;
       default: return basicSketch;
     }
   };
